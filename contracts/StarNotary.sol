@@ -14,8 +14,12 @@ contract StarNotary is ERC721 {
     // Implement Task 1 Add a name and symbol properties
     // name: Is a short name to your token
     // symbol: Is a short string like 'USD' -> 'American Dollar'
-    string public constant name = "StarToken";
-    string public constant symbol = "TKN";
+    string public name = "";
+    string public symbol = "";
+    constructor(string memory _name, string memory _symbol) ERC721() public{
+	    name = _name;
+	    symbol = _symbol;
+    }
 
     // mapping the Star with the Owner Address
     mapping(uint256 => Star) public tokenIdToStarInfo;
@@ -42,7 +46,7 @@ contract StarNotary is ERC721 {
         return address(uint160(x));
     }
 
-    function buyStar(uint256 _tokenId) public  payable {
+    function buyStar(uint256 _tokenId) external  payable {
         require(starsForSale[_tokenId] > 0, "The Star should be up for sale");
         uint256 starCost = starsForSale[_tokenId];
         address ownerAddress = ownerOf(_tokenId);
